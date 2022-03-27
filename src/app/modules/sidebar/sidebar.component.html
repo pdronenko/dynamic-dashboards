@@ -1,1 +1,7 @@
-<p>sidebar works!</p>
+<ng-container *ngIf="true">
+  <h2 class="sidebar-heading">Configuration Options</h2>
+  <hr class="divider" />
+  <mat-card class="slider-card">
+    <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ngx-slider>
+  </mat-card>
+</ng-container>

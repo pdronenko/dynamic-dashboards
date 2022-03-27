@@ -1,0 +1,9 @@
+.main-wrapper {
+  margin: 30px 100px;
+  display: flex;
+  flex-direction: row;
+
+  .chart-box {
+    flex: 0.7;
+  }
+}

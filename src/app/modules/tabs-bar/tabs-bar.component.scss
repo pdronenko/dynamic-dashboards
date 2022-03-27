@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  .add-tab-button {
+    margin-left: 50px;
+  }
+}

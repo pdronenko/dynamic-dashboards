@@ -1,4 +1,17 @@
-<p>No charts available, please click on the "+" button to add a new chart.</p>
-<button mat-fab color="primary" aria-label="Add chart button">
+<p *ngIf="false" class="empty-chart-text">No charts available, please click on the "+" button to add a new chart.</p>
+<button class="add-chart-button" mat-fab color="primary" aria-label="Add chart button">
   <mat-icon>add</mat-icon>
 </button>
+<mat-card class="chart-card">
+  <ngx-charts-bar-vertical
+    [scheme]="colorScheme"
+    [results]="results"
+    [showDataLabel]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'xAxisLabel'"
+    [yAxisLabel]="'yAxisLabel'">
+  </ngx-charts-bar-vertical>
+</mat-card>

@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  justify-content: left;
+  padding: 20px 40px 0 0;
+
+  .empty-chart-text {
+    font-size: 28px;
+    font-weight: 300;
+    margin-top: 70px;
+  }
+
+  .add-chart-button {
+    position: absolute;
+    right: 100px;
+    bottom: 100px;
+  }
+
+  .chart-card {
+    margin-top: 20px;
+    width: 100%;
+  }
+}
