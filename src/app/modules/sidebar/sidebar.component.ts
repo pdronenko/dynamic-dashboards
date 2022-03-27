@@ -8,15 +8,19 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit {
-  minValue: number = 10;
-  maxValue: number = 90;
+  minValue: number = 1;
+  maxValue: number = 10;
   options: SliderOptions = {
-    floor: 0,
-    ceil: 200,
+    floor: 1,
+    ceil: 10,
     getPointerColor: () => '#3f51b5',
   };
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  log() {
+    console.log(this.minValue, this.maxValue);
+  }
 }

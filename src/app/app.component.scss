@@ -1,9 +1,12 @@
-.main-wrapper {
-  margin: 30px 100px;
-  display: flex;
-  flex-direction: row;
+:host {
+  .main-wrapper {
+    margin: 30px auto;
+    display: flex;
+    flex-direction: row;
+    width: 80%;
 
-  .chart-box {
-    flex: 0.7;
+    .chart-box {
+      flex: 1;
+    }
   }
 }
