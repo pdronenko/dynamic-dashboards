@@ -1,5 +1,13 @@
-<app-tab-button mat-ripple [active]="false" [tabName]="'Tab 1'"></app-tab-button>
-<app-tab-button mat-ripple [active]="true" [tabName]="'Tab 2'"></app-tab-button>
-<button class="add-tab-button" mat-icon-button aria-label="Add tab">
-  <mat-icon color="primary">add</mat-icon>
+<app-tab-button
+  *ngFor="let tab of tabs"
+  (deleteTab)="deleteTab(tab.id)"
+  (click)="setActiveTab(tab.id)"
+  [active]="tab.id === activeTabId"
+  [tabName]="tab.name"
+  class="tab-button"
+  mat-ripple
+>
+</app-tab-button>
+<button (click)="addTab()" color="primary" *ngIf="tabs.length < tabsLimit" class="add-tab-button" mat-mini-fab aria-label="Add tab">
+  <mat-icon>add</mat-icon>
 </button>

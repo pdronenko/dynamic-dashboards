@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { TabsBarComponent } from './tabs-bar.component';
 import { TabButtonComponent } from './tab-button/tab-button.component';
+import { TabsBarComponent } from './tabs-bar.component';
 
 @NgModule({
   declarations: [TabsBarComponent, TabButtonComponent],

@@ -1,57 +1,20 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Color } from '@swimlane/ngx-charts';
+import { SubscriptionLike } from 'rxjs';
+import { AppState } from '../../core/store';
+import { addChart } from '../../core/store/tabs/tabs.actions';
+import { selectActiveTab } from '../../core/store/tabs/tabs.selector';
 
 @Component({
   selector: 'app-chart-area',
   templateUrl: './chart-area.component.html',
   styleUrls: ['./chart-area.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChartAreaComponent implements OnInit {
-  results = [
-    {
-      name: 'Germany',
-      value: 40632,
-      extra: {
-        code: 'de',
-      },
-    },
-    {
-      name: 'United States',
-      value: 50000,
-      extra: {
-        code: 'us',
-      },
-    },
-    {
-      name: 'France',
-      value: 36745,
-      extra: {
-        code: 'fr',
-      },
-    },
-    {
-      name: 'United Kingdom',
-      value: 36240,
-      extra: {
-        code: 'uk',
-      },
-    },
-    {
-      name: 'Spain',
-      value: 33000,
-      extra: {
-        code: 'es',
-      },
-    },
-    {
-      name: 'Italy',
-      value: 35800,
-      extra: {
-        code: 'it',
-      },
-    },
-  ];
+export class ChartAreaComponent implements OnInit, OnDestroy {
+  chartResults: { name: string; value: number }[] = [];
+  activeTabId: number | null;
 
   colorScheme: Color = {
     name: 'Name',
@@ -61,7 +24,23 @@ export class ChartAreaComponent implements OnInit {
     domain: ['black', 'green', 'yellow', 'red'],
   };
 
-  constructor() {}
+  private stateSub: SubscriptionLike;
 
-  ngOnInit(): void {}
+  constructor(private store: Store<AppState>, private cd: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.stateSub = this.store.select(selectActiveTab).subscribe((activeTab) => {
+      this.activeTabId = activeTab?.id || null;
+      this.chartResults = (activeTab?.chartData || []).map((entry) => ({ name: 'random', value: entry })); // todo
+      this.cd.markForCheck();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.stateSub?.unsubscribe();
+  }
+
+  addChart(): void {
+    this.store.dispatch(addChart({ tabId: this.activeTabId! }));
+  }
 }

@@ -9,7 +9,7 @@ export interface ActiveTabStateInterface {
 export const activeTabReducer = createImmerReducer(
   null as number | null,
   on(setActiveTab, (state, action) => {
-    state = action.activeTabId;
+    state = action.tabId;
     return state;
   })
 );
