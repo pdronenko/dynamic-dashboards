@@ -6,6 +6,8 @@ Open on [Vercel](https://dynamic-dashboards.vercel.app/)
 ## Roadmap
 
 - Save app state in local storage, retrieve it after page reload
+- Responsive design for small screens
+- Update route (query params) on each tab click
 
 ![plot](./src/assets/images/chart-view.png)
 ## Development server
