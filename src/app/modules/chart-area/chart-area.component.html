@@ -1,16 +1,15 @@
-<mat-card *ngIf="chartResults.length; else emptyMessage" class="chart-card">
+<mat-card *ngIf="chartData.length; else emptyMessage" class="chart-card">
   <div #containerRef class="chart-wrapper">
     <ngx-charts-bar-vertical
       [view]="[containerRef.offsetWidth, 400]"
       [customColors]="customColors"
-      [results]="chartResults"
+      [results]="chartData"
       [showDataLabel]="true"
       [xAxis]="true"
       [yAxis]="true"
-      [showXAxisLabel]="true"
+      [showXAxisLabel]="false"
       [showYAxisLabel]="true"
       [animations]="false"
-      [xAxisLabel]="xAxisLabel"
       [yAxisLabel]="yAxisLabel"
     >
     </ngx-charts-bar-vertical>
@@ -22,7 +21,7 @@
 </ng-template>
 
 <button
-  *ngIf="activeTabId && !chartResults.length"
+  *ngIf="activeTabId && !chartData.length"
   (click)="addChart()"
   class="add-chart-button"
   mat-fab

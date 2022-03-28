@@ -15,8 +15,7 @@ export class ChartAreaComponent implements OnInit, OnDestroy {
   private static readonly activeColor = '#3f51b5';
   private static readonly inactiveColor = '#757575';
   readonly yAxisLabel = 'Case count';
-  readonly xAxisLabel = 'Case by country';
-  chartResults: { value: number; name: string }[] = [];
+  chartData: { value: number; name: string }[] = [];
   customColors: { value: string; name: string }[] = [];
   activeTabId: number | null;
 
@@ -34,9 +33,9 @@ export class ChartAreaComponent implements OnInit, OnDestroy {
       .pipe(filter(Boolean))
       .subscribe((activeTab) => {
         this.activeTabId = activeTab.id || null;
-        this.chartResults = activeTab.chartData || [];
+        this.chartData = activeTab.chartData || [];
         const [rangeMin, rangeMax] = activeTab.range;
-        this.customColors = this.chartResults.map(({ name }, i) => ({
+        this.customColors = this.chartData.map(({ name }, i) => ({
           value: ChartAreaComponent.getBarColor(i + 1, rangeMin, rangeMax),
           name,
         }));
