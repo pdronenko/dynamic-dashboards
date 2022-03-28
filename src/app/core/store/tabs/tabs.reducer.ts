@@ -5,8 +5,16 @@ import { generateRandomNum } from '../../helpers/random-num-generator';
 import { TabStateInterface } from '../../interfaces/tab-state.interface';
 import { addChart, addTab, changeRange, deleteTab } from './tabs.actions';
 
+const generateRandomChartData = (): { name: string; value: number }[] => {
+  const countriesArr = [...countries];
+  return [...Array(generateRandomNum(8, 15))].map(() => ({
+    name: countriesArr.splice(generateRandomNum(0, countriesArr.length - 1), 1)[0],
+    value: generateRandomNum(100, 1000),
+  }));
+};
+
 export const tabsReducer = createImmerReducer(
-  [] as TabStateInterface[],
+  [{ id: 1, name: 'Tab 1', chartData: [], range: [] }] as TabStateInterface[],
   on(addTab, (state) => {
     const newId = (state[state.length - 1]?.id || 0) + 1;
     state.push({
@@ -24,11 +32,7 @@ export const tabsReducer = createImmerReducer(
   }),
   on(addChart, (state, action) => {
     const tab = state.find((tab) => tab.id === action.tabId)!;
-    const countriesArr = [...countries];
-    const randomChartData = [...Array(generateRandomNum(8, 15))].map(() => ({
-      name: countriesArr.splice(generateRandomNum(0, countriesArr.length - 1), 1)[0],
-      value: generateRandomNum(100, 1000),
-    }));
+    const randomChartData = generateRandomChartData();
     tab.chartData = randomChartData;
     tab.range = [1, randomChartData.length];
     return state;
