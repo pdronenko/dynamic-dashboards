@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { reducers } from './core/store';
@@ -23,11 +21,12 @@ import { TabsBarModule } from './modules/tabs-bar/tabs-bar.module';
     HeaderModule,
     ChartAreaModule,
     TabsBarModule,
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
-      autoPause: true,
-    }),
+    // todo causes a lot of change detections ticks
+    // StoreDevtoolsModule.instrument({
+    //   maxAge: 25,
+    //   logOnly: environment.production,
+    //   autoPause: true,
+    // }),
     SidebarModule,
     EffectsModule.forRoot([TabsEffects]),
   ],
