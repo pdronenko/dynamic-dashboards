@@ -1,6 +1,6 @@
 export interface TabStateInterface {
   id: number;
   name: string;
-  chartData: number[];
+  chartData: { value: number; name: string }[];
   range: number[];
 }

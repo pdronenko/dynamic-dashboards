@@ -2,15 +2,16 @@
   <div #containerRef class="chart-wrapper">
     <ngx-charts-bar-vertical
       [view]="[containerRef.offsetWidth, 400]"
-      [scheme]="colorScheme"
+      [customColors]="customColors"
       [results]="chartResults"
       [showDataLabel]="true"
       [xAxis]="true"
       [yAxis]="true"
       [showXAxisLabel]="true"
       [showYAxisLabel]="true"
-      [xAxisLabel]="'Case duration'"
-      [yAxisLabel]="'Number of cases'"
+      [animations]="false"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
     >
     </ngx-charts-bar-vertical>
   </div>

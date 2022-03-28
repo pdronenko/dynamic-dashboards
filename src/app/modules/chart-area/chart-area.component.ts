@@ -1,7 +1,6 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Color } from '@swimlane/ngx-charts';
-import { SubscriptionLike } from 'rxjs';
+import { filter, SubscriptionLike } from 'rxjs';
 import { AppState } from '../../core/store';
 import { addChart } from '../../core/store/tabs/tabs.actions';
 import { selectActiveTab } from '../../core/store/tabs/tabs.selector';
@@ -10,30 +9,39 @@ import { selectActiveTab } from '../../core/store/tabs/tabs.selector';
   selector: 'app-chart-area',
   templateUrl: './chart-area.component.html',
   styleUrls: ['./chart-area.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartAreaComponent implements OnInit, OnDestroy {
-  chartResults: { name: string; value: number }[] = [];
+  private static readonly activeColor = '#3f51b5';
+  private static readonly inactiveColor = '#757575';
+  readonly yAxisLabel = 'Case count';
+  readonly xAxisLabel = 'Case by country';
+  chartResults: { value: number; name: string }[] = [];
+  customColors: { value: string; name: string }[] = [];
   activeTabId: number | null;
-
-  colorScheme: Color = {
-    name: 'Name',
-    selectable: false,
-    // @ts-ignore
-    group: 'linear',
-    domain: ['black', 'green', 'yellow', 'red'],
-  };
 
   private stateSub: SubscriptionLike;
 
   constructor(private store: Store<AppState>, private cd: ChangeDetectorRef) {}
 
+  private static getBarColor(barPosition: number, rangeMin: number, rangeMax: number): string {
+    return barPosition >= rangeMin && barPosition <= rangeMax ? ChartAreaComponent.activeColor : ChartAreaComponent.inactiveColor;
+  }
+
   ngOnInit(): void {
-    this.stateSub = this.store.select(selectActiveTab).subscribe((activeTab) => {
-      this.activeTabId = activeTab?.id || null;
-      this.chartResults = (activeTab?.chartData || []).map((entry) => ({ name: 'random', value: entry })); // todo
-      this.cd.markForCheck();
-    });
+    this.stateSub = this.store
+      .select(selectActiveTab)
+      .pipe(filter(Boolean))
+      .subscribe((activeTab) => {
+        this.activeTabId = activeTab.id || null;
+        this.chartResults = activeTab.chartData || [];
+        const [rangeMin, rangeMax] = activeTab.range;
+        this.customColors = this.chartResults.map(({ name }, i) => ({
+          value: ChartAreaComponent.getBarColor(i + 1, rangeMin, rangeMax),
+          name,
+        }));
+        this.cd.markForCheck();
+      });
   }
 
   ngOnDestroy(): void {

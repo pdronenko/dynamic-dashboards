@@ -8,3 +8,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #e7e7e7;
 }
+
+.ngx-slider .ngx-slider-pointer.ngx-slider-active:after {
+  background-color: white !important;
+}

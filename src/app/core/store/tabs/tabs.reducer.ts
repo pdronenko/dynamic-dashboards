@@ -1,5 +1,6 @@
 import { on } from '@ngrx/store';
 import { createImmerReducer } from 'ngrx-immer/store';
+import { countries } from '../../consts/countries';
 import { generateRandomNum } from '../../helpers/random-num-generator';
 import { TabStateInterface } from '../../interfaces/tab-state.interface';
 import { addChart, addTab, changeRange, deleteTab } from './tabs.actions';
@@ -12,7 +13,7 @@ export const tabsReducer = createImmerReducer(
       id: newId,
       name: `Tab ${newId}`,
       chartData: [],
-      range: [], // todo range to object with min max?
+      range: [],
     });
     return state;
   }),
@@ -23,10 +24,12 @@ export const tabsReducer = createImmerReducer(
   }),
   on(addChart, (state, action) => {
     const tab = state.find((tab) => tab.id === action.tabId)!;
-    const randomChartData = [...Array(generateRandomNum(8, 15))].map(() => generateRandomNum(100, 1000));
+    const randomChartData = [...Array(generateRandomNum(6, 10))].map(() => ({
+      name: countries[generateRandomNum(0, countries.length - 1)],
+      value: generateRandomNum(100, 1000),
+    }));
     tab.chartData = randomChartData;
-    // length
-    tab.range = [0, randomChartData.length - 1];
+    tab.range = [1, randomChartData.length];
     return state;
   }),
   on(changeRange, (state, action) => {

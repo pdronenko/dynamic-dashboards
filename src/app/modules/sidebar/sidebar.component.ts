@@ -13,13 +13,15 @@ import { selectActiveTab } from '../../core/store/tabs/tabs.selector';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit, OnDestroy {
+  private static defaultSliderOptions: SliderOptions = {
+    floor: 1,
+    getPointerColor: () => '#3f51b5',
+    getSelectionBarColor: () => '#757575',
+  };
+
   minValue: number = 1;
   maxValue: number = 10;
-  options: SliderOptions = {
-    floor: 1,
-    ceil: 8,
-    getPointerColor: () => '#3f51b5',
-  };
+  options: SliderOptions;
   activeTabId: number | null;
 
   private stateSub: SubscriptionLike;
@@ -37,10 +39,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
         filter((tab) => !!tab?.chartData?.length)
       )
       .subscribe((activeTab) => {
-        this.options.floor = this.minValue = activeTab!.range[0] + 1;
-        this.options.ceil = this.maxValue = activeTab!.range[1] + 1;
+        this.minValue = activeTab!.range[0];
+        this.maxValue = activeTab!.range[1];
+        this.options = { ...SidebarComponent.defaultSliderOptions, ceil: activeTab!.chartData.length };
         this.cd.markForCheck();
-        console.log(this.options);
       });
   }
 
