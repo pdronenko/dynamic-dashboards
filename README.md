@@ -7,6 +7,7 @@ Open on [Vercel](https://dynamic-dashboards.vercel.app/)
 
 - Save app state in local storage, retrieve it after page reload
 
+![plot](./src/assets/images/chart-view.png)
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
