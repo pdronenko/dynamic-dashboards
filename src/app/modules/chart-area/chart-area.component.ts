@@ -30,6 +30,7 @@ export class ChartAreaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.stateSub = this.store.select(selectActiveTab).subscribe((activeTab) => {
       if (!activeTab) {
+        this.activeTabId = null;
         this.chartData = [];
         this.cd.markForCheck();
         return;
