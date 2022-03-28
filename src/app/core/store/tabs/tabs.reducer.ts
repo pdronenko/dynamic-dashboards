@@ -24,8 +24,9 @@ export const tabsReducer = createImmerReducer(
   }),
   on(addChart, (state, action) => {
     const tab = state.find((tab) => tab.id === action.tabId)!;
-    const randomChartData = [...Array(generateRandomNum(6, 10))].map(() => ({
-      name: countries[generateRandomNum(0, countries.length - 1)],
+    const countriesArr = [...countries];
+    const randomChartData = [...Array(generateRandomNum(8, 15))].map(() => ({
+      name: countriesArr.splice(generateRandomNum(0, countriesArr.length - 1), 1)[0],
       value: generateRandomNum(100, 1000),
     }));
     tab.chartData = randomChartData;

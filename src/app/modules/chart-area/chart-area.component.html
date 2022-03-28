@@ -1,7 +1,6 @@
 <mat-card *ngIf="chartData.length; else emptyMessage" class="chart-card">
-  <div #containerRef class="chart-wrapper">
+  <div class="chart-wrapper">
     <ngx-charts-bar-vertical
-      [view]="[containerRef.offsetWidth, 400]"
       [customColors]="customColors"
       [results]="chartData"
       [showDataLabel]="true"

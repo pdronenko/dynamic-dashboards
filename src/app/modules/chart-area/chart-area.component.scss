@@ -17,6 +17,11 @@
 
   .chart-card {
     margin-top: 20px;
-    width: 600px;
+    width: 100%;
+  }
+
+  .chart-wrapper {
+    display: grid;
+    min-height: 500px;
   }
 }

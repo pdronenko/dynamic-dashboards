@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { filter, SubscriptionLike } from 'rxjs';
+import { SubscriptionLike } from 'rxjs';
 import { AppState } from '../../core/store';
 import { addChart } from '../../core/store/tabs/tabs.actions';
 import { selectActiveTab } from '../../core/store/tabs/tabs.selector';
@@ -28,19 +28,21 @@ export class ChartAreaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.stateSub = this.store
-      .select(selectActiveTab)
-      .pipe(filter(Boolean))
-      .subscribe((activeTab) => {
-        this.activeTabId = activeTab.id || null;
-        this.chartData = activeTab.chartData || [];
-        const [rangeMin, rangeMax] = activeTab.range;
-        this.customColors = this.chartData.map(({ name }, i) => ({
-          value: ChartAreaComponent.getBarColor(i + 1, rangeMin, rangeMax),
-          name,
-        }));
+    this.stateSub = this.store.select(selectActiveTab).subscribe((activeTab) => {
+      if (!activeTab) {
+        this.chartData = [];
         this.cd.markForCheck();
-      });
+        return;
+      }
+      this.activeTabId = activeTab.id || null;
+      this.chartData = activeTab.chartData || [];
+      const [rangeMin, rangeMax] = activeTab.range;
+      this.customColors = this.chartData.map(({ name }, i) => ({
+        value: ChartAreaComponent.getBarColor(i + 1, rangeMin, rangeMax),
+        name,
+      }));
+      this.cd.markForCheck();
+    });
   }
 
   ngOnDestroy(): void {
