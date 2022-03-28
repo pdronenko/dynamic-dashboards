@@ -1,6 +1,14 @@
 <mat-toolbar class="toolbar" color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Menu">
+  <span>Dashboard</span>
+  <span class="spacer"></span>
+  <button [matMenuTriggerFor]="menu" mat-icon-button class="example-icon" aria-label="Menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Dashboard</span>
 </mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <a href="https://github.com/pdronenko/dynamic-dashboards" target="_blank" mat-menu-item>
+    <mat-icon>code</mat-icon>
+    <span>Source code</span>
+  </a>
+</mat-menu>

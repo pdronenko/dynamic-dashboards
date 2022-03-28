@@ -1,7 +1,7 @@
 # Dynamic Dashboards
 
 ## Try it
-Open on [GitHub Pages](https://pdronenko.github.io/dynamic-dashboards/)
+Open on [Vercel](https://dynamic-dashboards.vercel.app/)
 
 ## Roadmap
 
